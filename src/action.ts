@@ -56,7 +56,7 @@ function downloadCreds(config: Config, asset: models.ReleaseAsset): string {
 export function generateNotes(config: Config, uploads: models.UploadResult[]): string {
 
   const autobuildInstallCommands = uploads.map(u =>
-    `autobuild installables edit ${u.package.name} platform=${u.package.platform} url=${downloadUrl(config, u.asset)} hash_algorithm=sha1 hash=${u.package.sha1}${downloadCreds(config, u.asset)}`
+    `autobuild installables edit ${u.package.name} platform=${u.package.platform} url=${downloadUrl(config, u.asset)} hash_algorithm=blake2b hash=${u.package.blake2b}${downloadCreds(config, u.asset)}`
   ).join("\n")
 
   return `${NOTES_HEADER}
