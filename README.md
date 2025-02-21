@@ -14,14 +14,14 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-2022, macos-11, ubuntu-22.04]
+        os: [windows-2022, macos-15, ubuntu-22.04]
         addrsize: ["64"]
         include:
           - os: windows-2022
             addrsize: "32"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: secondlife/action-autobuild@v3
+      - uses: AlchemyViewer/action-autobuild@v3
         with:
           addrsize: ${{ matrix.addrsize }}
   release:
@@ -29,7 +29,7 @@ jobs:
     runs-on: [ubuntu-latest]
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
-      - uses: secondlife/action-autobuild-release@v3
+      - uses: AlchemyViewer/action-autobuild-release@v4
         with:
           public: true
 ```
@@ -40,7 +40,7 @@ If you want to upload your release artifacts to S3 in addition to github:
 
 ```yaml
 steps:
-  - uses: secondlife/action-autobuild-release@v3
+  - uses: AlchemyViewer/action-autobuild-release@v4
     with:
       public: true
       upload-to: |
@@ -60,7 +60,7 @@ steps:
     with:
       aws-region: us-west-2
       role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-  - uses: secondlife/action-autobuild-release@v3
+  - uses: AlchemyViewer/action-autobuild-release@v4
     with:
       public: true
       upload-to: s3://my-bucket/prefix-1/
